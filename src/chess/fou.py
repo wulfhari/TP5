@@ -8,7 +8,7 @@ Created on 2013-11-03
 Fichier contenant la classe Fou
 '''
 
-from chess.piece import Piece
+from src.chess.piece import Piece
 
 class Fou(Piece):
     '''

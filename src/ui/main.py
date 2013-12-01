@@ -6,10 +6,12 @@ Created on 2013-11-03
 
 @author: C. Besse
 '''
-from chess.fin import FinDePartie
-from chess.game import GameManagement
-from chess.plateau import Plateau
-from chess.roi import Roi
+
+
+from src.chess.fin import FinDePartie
+from src.chess.game import GameManagement
+from src.chess.plateau import Plateau
+from src.chess.roi import Roi
 import random
 
 def testP():

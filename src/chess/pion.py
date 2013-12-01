@@ -8,7 +8,7 @@ Created on 2013-11-03
 Fichier contenant la classe Pion
 '''
 
-from chess.piece import Piece
+from src.chess.piece import Piece
 
 class Pion(Piece):
     '''

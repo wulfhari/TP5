@@ -8,9 +8,9 @@ Created on 2013-11-03
 Fichier contenant la classe Dame
 '''
 
-from chess.piece import Piece
-from chess.tour import Tour
-from chess.fou import Fou
+from src.chess.piece import Piece
+from src.chess.tour import Tour
+from src.chess.fou import Fou
 
 class Dame(Piece):
     '''

@@ -7,14 +7,14 @@ Created on 2013-11-06
 @author: C. Besse
 Fichier contenant la classe GameManagement
 '''
-from chess.cavalier import Cavalier
-from chess.dame import Dame
-from chess.fin import FinDePartie
-from chess.fou import Fou
-from chess.pion import Pion
-from chess.plateau import Plateau
-from chess.roi import Roi
-from chess.tour import Tour
+from src.chess.cavalier import Cavalier
+from src.chess.dame import Dame
+from src.chess.fin import FinDePartie
+from src.chess.fou import Fou
+from src.chess.pion import Pion
+from src.chess.plateau import Plateau
+from src.chess.roi import Roi
+from src.chess.tour import Tour
 
 class GameManagement:
     '''

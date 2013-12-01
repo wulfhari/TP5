@@ -8,7 +8,7 @@
 Fichier contenant la classe Tour
 """
 
-from chess.piece import Piece
+from src.chess.piece import Piece
 
 class Tour(Piece):
     '''Une tour est une pièce d'échec qui peut se déplacer selon les ligne set les colonnes'''

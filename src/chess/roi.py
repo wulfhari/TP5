@@ -8,9 +8,9 @@ Created on 2013-11-03
 Fichier contenant la classe Roi
 '''
 
-from chess.piece import Piece
-from chess.pion import Pion
-from chess.tour import Tour
+from src.chess.piece import Piece
+from src.chess.pion import Pion
+from src.chess.tour import Tour
 
 class Roi(Piece):
     '''
