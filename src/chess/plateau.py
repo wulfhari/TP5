@@ -7,13 +7,14 @@
 
 Fichier contenant la classe Plateau
 """
+print(dir())
 
-from chess.tour import Tour
-from chess.pion import Pion
-from chess.cavalier import Cavalier
-from chess.fou import Fou
-from chess.dame import Dame
-from chess.roi import Roi
+from src.chess.tour import Tour
+from src.chess.pion import Pion
+from src.chess.cavalier import Cavalier
+from src.chess.fou import Fou
+from src.chess.dame import Dame
+from src.chess.roi import Roi
 
 class Plateau:
     
