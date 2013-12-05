@@ -7,7 +7,6 @@
 
 Fichier contenant la classe Plateau
 """
-print(dir())
 
 from src.chess.tour import Tour
 from src.chess.pion import Pion

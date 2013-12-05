@@ -170,7 +170,7 @@ if __name__ == "__main__":
     
     
     test = 0
-    while test < 10000 and jeu:# jeu:
+    while test < 10 and jeu:# jeu:
         try:
             g = GameManagement("../jeu1.txt")
             print(g)  
