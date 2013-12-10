@@ -339,7 +339,7 @@ class GameManagement:
                     sROC += "0 "                       
         else:
             sROC += "0 0 "                                   
-        file.writeline(str(self.time)+sROC+"\n")
+        file.writelines(str(self.time)+sROC+"\n")
         file.writelines(self.board.pourEcrireFichier())
         file.close()
         

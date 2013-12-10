@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# -*- coding:Utf-8 -*-
+
 '''
 Created on Dec 4, 2013
 
@@ -6,9 +9,7 @@ Created on Dec 4, 2013
 
 if __name__ == '__main__':
     
-    from src.ui.board import *
+    
+    from src.ui.window import Window
 
-    root = tk.Tk()
-    board = Damier(root,64)
-    addNouveauJeu(board)
-    root.mainloop()
+    win = Window()
