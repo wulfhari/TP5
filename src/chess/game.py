@@ -259,10 +259,6 @@ class GameManagement:
         file = open(f_path,'r')
         l = file.readlines()
         file.close()
-        
-        if l == []
-           raise IOError
-        
         info = l[0].split()
         self.time = int(info[0])
         # A qui de jouer ? selon le time stamp:
@@ -310,9 +306,6 @@ class GameManagement:
         '''
         Pour lire une partie depuis un fichier
         '''
-        if f_path == " ":
-            raise IOError
-            
         file = open(f_path,'w')
         rn = self.board.getRoi(0)
         rb = self.board.getRoi(1)
