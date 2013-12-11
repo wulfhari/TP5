@@ -36,8 +36,8 @@ class Damier(tk.Frame):
     def addpiece(self, name, row=0, column=0):
         '''Ajoute une piece sur le damier'''
         # Caracteres unicode des pieces
-        dic_pieces = {'TB': '\u2656','CB': '\u2658','FB': '\u2657','KB': '\u2654','QB': '\u2655','PB': '\u2659',
-                      'TN': '\u265C','CN': '\u265E','FN': '\u265D','KN': '\u265A','QN': '\u265B','PN': '\u265F',}
+        dic_pieces = {'TB': '\u2656','CB': '\u2658','FB': '\u2657','RB': '\u2654','DB': '\u2655','PB': '\u2659',
+                      'TN': '\u265C','CN': '\u265E','FN': '\u265D','RN': '\u265A','DN': '\u265B','PN': '\u265F',}
         tempfont = ('Helvetica',self.size//2)
         text = dic_pieces[name[0:2]]
         # On "dessine" le nom
@@ -84,8 +84,8 @@ def addNouveauJeu(board):
         board.addpiece("TB1", 0, 0)
         board.addpiece("CB1", 0, 1)
         board.addpiece("FB1", 0, 2)
-        board.addpiece("KB", 0, 3)
-        board.addpiece("QB", 0, 4)
+        board.addpiece("RB", 0, 3)
+        board.addpiece("DB", 0, 4)
         board.addpiece("FB2", 0, 5)
         board.addpiece("CB2", 0, 6)
         board.addpiece("TB2", 0, 7)
@@ -101,8 +101,8 @@ def addNouveauJeu(board):
         board.addpiece("TN1", 7, 0)
         board.addpiece("CN1", 7, 1)
         board.addpiece("FN1", 7, 2)
-        board.addpiece("KN", 7, 3)
-        board.addpiece("QN", 7, 4)
+        board.addpiece("RN", 7, 3)
+        board.addpiece("DN", 7, 4)
         board.addpiece("FN2", 7, 5)
         board.addpiece("CN2", 7, 6)
         board.addpiece("TN2", 7, 7)

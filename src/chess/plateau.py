@@ -77,7 +77,7 @@ class Plateau:
         '''
         Retourne une série de lignes formatées (line,col,type,couleur)\n
         '''
-        s = ""
+        s = []
         for p in self.damier.values():
             if p.color == 0:
                 couleur = "N"
@@ -95,7 +95,9 @@ class Plateau:
                 typ = "D"
             else: # Roi
                 typ = "R"
-            s += str(p.pos[0]) + str(p.pos[1]) + typ + couleur + "\n" 
+                
+            item = str(p.pos[0]) + str(p.pos[1]) + typ + couleur
+            s.append(item) 
         
         return s
     
