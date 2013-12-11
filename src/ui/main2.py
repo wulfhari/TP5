@@ -64,9 +64,13 @@ class Window(Frame):
         
         def actualiser():
             pieces_list = g.board.pourEcrireFichier()
+            for piece in pieces_list:
+                pieces_list[pieces_list.index(piece)] = piece + str(pieces_list.index(piece))
+            
             print(pieces_list)
             for piece in pieces_list:
                 self.carreaux.addpiece(piece[2:],int(piece[0]),int(piece[1]))
+                
         
         
         def print_pieces():
