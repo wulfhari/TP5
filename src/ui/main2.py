@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#! c:/Python33 python
 # -*- coding:Utf-8 -*-
 
 '''
@@ -31,7 +31,7 @@ class Window(Frame):
         
         # Maintient de l'affichage
         
-        
+        ''' Les labels des joueurs '''
         Label(root, text="Joueur 1", width=20,anchor=W).grid(row=0, column=1, sticky=W)
         Label(root, text="Joueur 2", width=20,anchor=W).grid(row=0, column=2, sticky=W)
         
@@ -48,13 +48,13 @@ class Window(Frame):
         
         Label(root, text="Nom du Fichier", width=20,anchor=W).grid(row=4, column=3, sticky=W)
         self.file = Entry(root, width=25)
-        self.file.insert(0,"../jeu1.txt")
+        self.file.insert(0,"../jeu2.txt")
         self.file.grid(row=5, column=3, sticky=E+W)
         
-        # Cr�ation du bouton effacant le text
+        # Création du bouton effacant le text
         self.btn = Button(root, text="Personaliser")
         self.btn.grid(row=6,column=3,sticky=E+W)           
-        # Cr�ation du bouton d�clanchant le calcul
+        # Création du bouton déclanchant le calcul
         
         
         g = GameManagement(self.file.get())
@@ -63,12 +63,14 @@ class Window(Frame):
         
         
         def actualiser():
-            pass
-        
-        
-        def print_piece():
-            for piece in g.board.pourEcrireFichier():
+            pieces_list = g.board.pourEcrireFichier()
+            print(pieces_list)
+            for piece in pieces_list:
                 self.carreaux.addpiece(piece[2:],int(piece[0]),int(piece[1]))
+        
+        
+        def print_pieces():
+            actualiser()
         
         def load_game():
             g.lireFichier(self.file.get())
@@ -84,7 +86,7 @@ class Window(Frame):
         def previous_turn():
             pass
         
-        self.btn = Button(root, text="Nouvelle Partie", command = lambda :  print_piece())
+        self.btn = Button(root, text="Nouvelle Partie", command = lambda :  print_pieces())
         self.btn.grid(row=7,column=3,sticky=E+W)           
                 
         self.btn = Button(root, text="Charger une partie", command= lambda : load_game())
@@ -107,7 +109,7 @@ class Window(Frame):
         # Cr�ation de l'affichage
         self.txt = Text(root, height=25, width=25, wrap=WORD)
         self.txt.grid(row=2,column=1,columnspan=2, rowspan=25,sticky=NSEW)
-        # Cr�ation de la scrollbar
+        # Création de la scrollbar
 #         sc = Scrollbar(root,orient=VERTICAL) 
 #         ## association du d�placement de la glissi�re des scrollbar avec la position visible dans 
 #         ## le widget Text et inversement.              
