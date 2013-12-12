@@ -32,6 +32,10 @@ class Damier(tk.Frame):
 
         # Fais en sorte que le redimensionnement de la fenetre redimensionne le damier
         self.canvas.bind("<Configure>", self.refresh)
+        self.canvas.bind("<Button-1>",self.grab)
+        self.canvas.bind("<ButtonRelease-1>",self.drop)
+        
+        
 
     def addpiece(self, name, row=0, column=0):
         '''Ajoute une piece sur le damier'''
@@ -45,7 +49,8 @@ class Damier(tk.Frame):
         # On place la piece pour le rafraichissement
         self.pieces[name] = (row, column)
         self.placepiece(name, row, column)
-
+        
+        
     def placepiece(self, name, row, column):
         '''Place une piece a la position donnee row/column'''
         x0 = (column * self.size) + int(self.size / 2)
@@ -81,9 +86,19 @@ class Damier(tk.Frame):
     def clear(self):
         self.canvas.delete("piece")
         
-    def actualiser(self):
-        pass
-        
+    def grab(self,event):
+        x = event.x // self.size
+        y = event.y // self.size
+        print(y,x)
+        return y,x
+    
+            
+    def drop(self,event):
+        x = event.x // self.size
+        y = event.y // self.size
+        print(y,x)
+        return y,x
+    
 
 def addNouveauJeu(board):
         # Le blancs
