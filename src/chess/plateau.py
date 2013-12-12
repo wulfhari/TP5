@@ -96,7 +96,7 @@ class Plateau:
             else: # Roi
                 typ = "R"
                 
-            item = str(p.pos[0]) + str(p.pos[1]) + typ + couleur
+            item = str(p.pos[0]) + str(p.pos[1]) + typ + couleur + "\n" 
             s.append(item) 
         
         return s
@@ -153,6 +153,7 @@ class Plateau:
 
 if __name__ == "__main__":
     p = Plateau()
+    p.pourEcrireFichier()
     print(p)
          
         

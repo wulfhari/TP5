@@ -77,7 +77,13 @@ class Damier(tk.Frame):
         # On mets les pieces au dessus des cases
         self.canvas.tag_raise("piece")
         self.canvas.tag_lower("case")
-
+        
+    def clear(self):
+        self.canvas.delete("piece")
+        
+    def actualiser(self):
+        pass
+        
 
 def addNouveauJeu(board):
         # Le blancs
