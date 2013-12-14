@@ -36,7 +36,7 @@ class Window(Frame):
         self.eaten = tk.Canvas(self.root, borderwidth=0, highlightthickness=0,width=512, height=128, background="white")
         self.eaten.pack(side="top", fill="both", expand=True, padx=2, pady=2)
         self.eaten.grid(row=26,column = 0, sticky=S)
-        
+         
         # initialisation du damier
         self.carreaux = Damier(self.root,64)
         self.carreaux.grid(row=0, column=0,rowspan=25, sticky=NSEW)
@@ -103,15 +103,56 @@ class Window(Frame):
         
         ''' Radio boutons pour la personalisation des parties'''
         
+        Label(self.root, text="Personalisation", width=20,anchor=W).grid(row=12, column=3, sticky=W)
+        self.perso_state = StringVar()
+        self.perso_on = Radiobutton(self.root, text="Inactif", variable=self.perso_state, value="on")
+        self.perso_on.grid(row=13, column=3, sticky=W)
+        self.perso_off = Radiobutton(self.root, text="Actif", variable=self.perso_state, value="off")
+        self.perso_off.grid(row=14, column=3, sticky=W)
+        
+        # radio bouton pour la couleur
+        
+        Label(self.root, text="Couleur a ajouter", width=20,anchor=W).grid(row=15, column=3, sticky=W)
+        self.color_state = StringVar()
+        self.noir = Radiobutton(self.root, text="Noir", variable=self.color_state, value="N")
+        self.noir.grid(row=16, column=3, sticky=W)
+        self.blanc = Radiobutton(self.root, text="Blanc", variable=self.color_state, value="B")
+        self.blanc.grid(row=17, column=3, sticky=W)
+        
+        #radio bouton pour le choix de la piece
+        
+        Label(self.root, text="Piece a ajouter", width=20,anchor=W).grid(row=18, column=3, sticky=W)
+        self.piece = StringVar()
+        self.pion = Radiobutton(self.root, text="Pion", variable=self.piece, value="P")
+        self.pion.grid(row=19, column=3, sticky=W)
+        
+        self.tour = Radiobutton(self.root, text="Tour", variable=self.piece, value="T")
+        self.tour.grid(row=20, column=3, sticky=W)
+        
+        self.cavalier = Radiobutton(self.root, text="Cavalier", variable=self.piece, value="C")
+        self.cavalier.grid(row=21, column=3, sticky=W)
+        
+        self.fou = Radiobutton(self.root, text="Fou", variable=self.piece, value="F")
+        self.fou.grid(row=22, column=3, sticky=W)
+        
+        self.dame = Radiobutton(self.root, text="Dame", variable=self.piece, value="D")
+        self.dame.grid(row=23, column=3, sticky=W)
+        
+        self.roi = Radiobutton(self.root, text="Roi", variable=self.piece, value="R")
+        self.roi.grid(row=24, column=3, sticky=W)
+        
+        
         
         '''Gestion des click de la sourie '''
-        
-        
-        self.mouseGrab = None
-        self.mouseDrop = None
-        self.root.bind("<Button-1>", self.grab_piece)
-        self.root.bind("<ButtonRelease-1>", self.drop_piece)
-        
+        if self.perso_state.get() == "on":
+            self.root.bind("<Button-1>", self.add_piece)
+            self.root.bind("Button-3", self.del_piece)
+        else: 
+            self.mouseGrab = None
+            self.mouseDrop = None
+            self.root.bind("<Button-1>", self.grab_piece)
+            self.root.bind("<ButtonRelease-1>", self.drop_piece)
+            
         ###############################################################
         # Debut de la section des methode de la classe Window
         ###############################################################
@@ -169,6 +210,12 @@ class Window(Frame):
         self.g.play(self.g.board.getPiece(self.mouseGrab[0], self.mouseGrab[1]), self.mouseDrop)
         self.actualiser()
         
+    def add_piece(self,event):
+        self.mouseGrab = self.carreaux.grab(event)
+        self.carreaux.addpiece(self.piece.get()+self.color_state.get(), self.mouseGrab)
+        
+    def del_piece(self,event):
+            pass
         
     ''' pour choisir le fichier qui servira lors de l'ecriture et de la lecture de partie '''
     def path_dialog(self):
