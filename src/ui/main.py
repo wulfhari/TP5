@@ -46,6 +46,8 @@ class Window(Frame):
         
         self.text = Text_Box(self.root, 25, 25)
         #self.text = Text(root, height=25, width=25, wrap=WORD)
+        self.text.text_insert('Cliquez et bougez la piece a jouer\n', 'Historique des coups')
+        self.text.text_insert('Depart', 'Arivee')
         self.text.grid(row=2,column=1,columnspan=2, rowspan=25,sticky=NSEW)
         
         
@@ -72,19 +74,12 @@ class Window(Frame):
         
         '''Creation des bouttons de commandes'''
         
-        self.btn = Button(self.root, text="Choisir un fichier", command = lambda :self.path_dialog() )
+        self.btn = Button(self.root, text="Choisir un fichier", command = lambda :self.path_dialog())
         self.btn.grid(row=6,column=3,sticky=E+W)
-        #bouton personaliser
-        self.btn = Button(self.root, text="Personaliser")
-        self.btn.grid(row=7,column=3,sticky=E+W)           
         
         # Jouer une nouvelle partie depuis le fichier jeu2.txt
         self.btn = Button(self.root, text="Nouvelle Partie", command = lambda :  self.nouvelle_partie())
         self.btn.grid(row=8,column=3,sticky=E+W)           
-        
-        #bouton charger une partie
-        self.btn = Button(self.root, text="Charger le fichier actif", command= lambda : self.load_game())
-        self.btn.grid(row=9,column=3,sticky=E+W)
         
         #bouton enregistrer
         self.btn = Button(self.root, text="Enregistrer", command= lambda : self.save_game())
@@ -224,6 +219,7 @@ class Window(Frame):
         if self.file_path != "":
             self.file.delete(0, END)
             self.file.insert(0,self.file_path)
+            self.load_game()
         else:
             self.file.delete(0, END)
             self.file.insert(0,"Choisisez un fichier")
