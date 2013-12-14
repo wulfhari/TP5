@@ -208,6 +208,7 @@ class Window(Frame):
             Raise ValueError('Veuillez charger une partie')
         '''
         self.g.play(self.g.board.getPiece(self.mouseGrab[0], self.mouseGrab[1]), self.mouseDrop)
+        self.histo()
         self.actualiser()
         
     def add_piece(self,event):
@@ -227,7 +228,9 @@ class Window(Frame):
             self.file.delete(0, END)
             self.file.insert(0,"Choisisez un fichier")
         
+    def histo(self):
         
+        self.text.text_insert(((self.mouseGrab[0], self.mouseGrab[1])), self.mouseDrop)
         
 if __name__ == "__main__":
     root=Tk()

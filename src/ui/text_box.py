@@ -36,5 +36,5 @@ class Text_Box(tk.Frame,):
         # On efface le text widget
         self.text.delete(1.0, END)
         
-    def text_insert(self, text):
-        self.text.insert(END,"{0:8}{1:>20}{2:>13}{3:>18}\n".format("Annee", "Montant initial", "Interet", "Montant final"))
+    def text_insert(self, x,y):
+        self.text.insert(END,"{0:8}{1:>20}\n".format(x,y))
