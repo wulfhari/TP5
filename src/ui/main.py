@@ -266,7 +266,7 @@ class Window(Frame):
             
     def histo(self):
         
-        self.text.text_insert(((self.mouseGrab[0], self.mouseGrab[1])), self.mouseDrop)
+        self.text.text_insert(((self.g.board.getPiece(self.mouseDrop[0], self.mouseDrop[1]),self.mouseGrab[0], self.mouseGrab[1])), (self.g.board.getPiece(self.mouseDrop[0], self.mouseDrop[1]),self.mouseDrop))
         
 if __name__ == "__main__":
     root=Tk()
