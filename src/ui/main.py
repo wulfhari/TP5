@@ -14,6 +14,13 @@ from src.chess.game import *
 from src.chess.plateau import *
 from src.ui.board import Damier
 from src.ui.text_box import *
+from src.chess.tour import Tour
+from src.chess.pion import Pion
+from src.chess.cavalier import Cavalier
+from src.chess.fou import Fou
+from src.chess.dame import Dame
+from src.chess.roi import Roi
+from src.chess.piece import Piece
 
 class Window(Frame):
     '''
@@ -29,7 +36,7 @@ class Window(Frame):
         '''
         
         self.root = root
-        self.g = None
+        self.g = GameManagement('../jeu1.txt')
         
         ''' Initialisation des canvas '''
         # initialisation du canvas qui contient les pieces mangees
@@ -46,7 +53,7 @@ class Window(Frame):
         
         self.text = Text_Box(self.root, 25, 25)
         #self.text = Text(root, height=25, width=25, wrap=WORD)
-        self.text.text_insert('Cliquez et bougez la piece a jouer\n', 'Historique des coups')
+        self.text.text_insert("Cliquez et bougez la piece a jouer\n\n", 'Historique des coups')
         self.text.text_insert('Depart', 'Arivee')
         self.text.grid(row=2,column=1,columnspan=2, rowspan=25,sticky=NSEW)
         
@@ -55,39 +62,38 @@ class Window(Frame):
         Label(self.root, text="Joueur 1", width=20,anchor=W).grid(row=0, column=1, sticky=W)
         Label(self.root, text="Joueur 2", width=20,anchor=W).grid(row=0, column=2, sticky=W)
         
-        Label(self.root, text="Piece a jouer", width=20,anchor=W).grid(row=0, column=3, sticky=W)
-        self.paj = Entry(self.root, width=25)
-        self.paj.insert(0,"46")
-        self.paj.grid(row=1, column=3, sticky=E+W)
         
-        
-        Label(self.root, text="Destination", width=20,anchor=W).grid(row=2, column=3, sticky=W)
-        self.dest = Entry(self.root, width=25)
-        self.dest.insert(0, "44" )
-        self.dest.grid(row=3, column=3, sticky=E+W)
-        
-        Label(self.root, text="Nom du Fichier actif", width=20,anchor=W).grid(row=4, column=3, sticky=W)
+        Label(self.root, text="Nom du Fichier actif", width=20,anchor=W).grid(row=0, column=3, sticky=W)
         self.file = Entry(self.root, width=25)
         self.file.insert(0," ")
-        self.file.grid(row=5, column=3, sticky=E+W)
+        self.file.grid(row=1, column=3, sticky=E+W)
         
         
         '''Creation des bouttons de commandes'''
         
         self.btn = Button(self.root, text="Choisir un fichier", command = lambda :self.path_dialog())
-        self.btn.grid(row=6,column=3,sticky=E+W)
+        self.btn.grid(row=2,column=3,sticky=N+E+W)
         
-        # Jouer une nouvelle partie depuis le fichier jeu2.txt
+        
+        # Jouer une nouvelle partie depuis le fichier jeu1.txt
         self.btn = Button(self.root, text="Nouvelle Partie", command = lambda :  self.nouvelle_partie())
-        self.btn.grid(row=8,column=3,sticky=E+W)           
+        self.btn.grid(row=3,column=3,sticky=N+E+W)           
         
         #bouton enregistrer
         self.btn = Button(self.root, text="Enregistrer", command= lambda : self.save_game())
-        self.btn.grid(row=10,column=3,sticky=E+W)
+        self.btn.grid(row=4,column=3,sticky=N+E+W)
         
         #bouton quiter
         self.btn = Button(self.root, text="Quitter", command=quit)
-        self.btn.grid(row=11,column=3,sticky=E+W)
+        self.btn.grid(row=5,column=3,sticky=N+E+W)
+        
+        self.perso_state = "off"
+        self.perso_btn = Button(self.root, text="Personaliser", command = lambda : self.switch_perso())
+        self.perso_btn.grid(row=6, column=3, sticky=N+W+E)
+        
+        
+        self.btn = Button(self.root, text="Effacer", command=lambda : self.clear())
+        self.btn.grid(row=7,column=3,sticky=N+E+W)
         
         #bouton coup precedent
         self.btn = Button(self.root, text="Coup Precedent", command = lambda : self.previous_turn())
@@ -96,57 +102,46 @@ class Window(Frame):
         self.btn = Button(self.root, text="Coup Suivant", command = lambda : self.previous_turn())
         self.btn.grid(row=1,column=2,sticky=E+W)
         
+        
         ''' Radio boutons pour la personalisation des parties'''
-        
-        Label(self.root, text="Personalisation", width=20,anchor=W).grid(row=12, column=3, sticky=W)
-        self.perso_state = StringVar()
-        self.perso_on = Radiobutton(self.root, text="Inactif", variable=self.perso_state, value="on")
-        self.perso_on.grid(row=13, column=3, sticky=W)
-        self.perso_off = Radiobutton(self.root, text="Actif", variable=self.perso_state, value="off")
-        self.perso_off.grid(row=14, column=3, sticky=W)
-        
-        # radio bouton pour la couleur
+                # radio bouton pour la couleur
         
         Label(self.root, text="Couleur a ajouter", width=20,anchor=W).grid(row=15, column=3, sticky=W)
-        self.color_state = StringVar()
-        self.noir = Radiobutton(self.root, text="Noir", variable=self.color_state, value="N")
+        self.color_state = IntVar()
+        self.noir = Radiobutton(self.root, text="Noir", variable=self.color_state, value=0)
         self.noir.grid(row=16, column=3, sticky=W)
-        self.blanc = Radiobutton(self.root, text="Blanc", variable=self.color_state, value="B")
+        self.blanc = Radiobutton(self.root, text="Blanc", variable=self.color_state, value=1)
         self.blanc.grid(row=17, column=3, sticky=W)
         
         #radio bouton pour le choix de la piece
         
         Label(self.root, text="Piece a ajouter", width=20,anchor=W).grid(row=18, column=3, sticky=W)
         self.piece = StringVar()
-        self.pion = Radiobutton(self.root, text="Pion", variable=self.piece, value="P")
+        self.pion = Radiobutton(self.root, text="Pion", variable=self.piece, value='Pion')
         self.pion.grid(row=19, column=3, sticky=W)
         
-        self.tour = Radiobutton(self.root, text="Tour", variable=self.piece, value="T")
+        self.tour = Radiobutton(self.root, text="Tour", variable=self.piece, value='Tour')
         self.tour.grid(row=20, column=3, sticky=W)
         
-        self.cavalier = Radiobutton(self.root, text="Cavalier", variable=self.piece, value="C")
+        self.cavalier = Radiobutton(self.root, text="Cavalier", variable=self.piece, value='Cavalier')
         self.cavalier.grid(row=21, column=3, sticky=W)
         
-        self.fou = Radiobutton(self.root, text="Fou", variable=self.piece, value="F")
+        self.fou = Radiobutton(self.root, text="Fou", variable=self.piece, value='Fou')
         self.fou.grid(row=22, column=3, sticky=W)
         
-        self.dame = Radiobutton(self.root, text="Dame", variable=self.piece, value="D")
+        self.dame = Radiobutton(self.root, text="Dame", variable=self.piece, value='Dame')
         self.dame.grid(row=23, column=3, sticky=W)
         
-        self.roi = Radiobutton(self.root, text="Roi", variable=self.piece, value="R")
+        self.roi = Radiobutton(self.root, text="Roi", variable=self.piece, value='Roi')
         self.roi.grid(row=24, column=3, sticky=W)
         
         
+        ''' GEstion des clicks de la sourie'''
+        self.root.bind("<Button-1>", self.grab_piece)
+        self.root.bind("<ButtonRelease-1>", self.drop_piece)
         
-        '''Gestion des click de la sourie '''
-        if self.perso_state.get() == "on":
-            self.root.bind("<Button-1>", self.add_piece)
-            self.root.bind("Button-3", self.del_piece)
-        else: 
-            self.mouseGrab = None
-            self.mouseDrop = None
-            self.root.bind("<Button-1>", self.grab_piece)
-            self.root.bind("<ButtonRelease-1>", self.drop_piece)
+        
+        
             
         ###############################################################
         # Debut de la section des methode de la classe Window
@@ -160,14 +155,17 @@ class Window(Frame):
         for piece in pieces_list:
             pieces_list[pieces_list.index(piece)] = piece + str(pieces_list.index(piece))
         
-        print(pieces_list)
         for piece in pieces_list:
             self.carreaux.addpiece(piece[2:],int(piece[0]),int(piece[1]))
             
-        ''' pour creer une partie avec les blancs en bas'''
+            '''Pour creer une partie vierge'''
+    def clear(self):
+        self.g = GameManagement('../jeu2.txt')
+        self.actualiser()
+        ''' pour creer une partie avec les blancs en haut'''
     def nouvelle_partie(self):
         
-        path = "../jeu2.txt"
+        path = "../jeu1.txt"
         self.g = GameManagement(path)
         self.actualiser()
     
@@ -184,7 +182,7 @@ class Window(Frame):
         
         
     def next_turn(self):
-        pass
+        
         piece = str(self.paj.get())
         dest = str(self.dest.get())
         self.g.play(Plateau.getPiece(self.g.board.damier,piece[0],piece[1]),dest[0],dest[1])
@@ -208,11 +206,26 @@ class Window(Frame):
         
     def add_piece(self,event):
         self.mouseGrab = self.carreaux.grab(event)
-        self.carreaux.addpiece(self.piece.get()+self.color_state.get(), self.mouseGrab)
+        
+        if self.piece.get() == 'Pion':
+            self.g.board.damier[(self.mouseGrab)]=Pion((self.mouseGrab),self.color_state.get())
+        elif self.piece.get() == 'Dame':
+            self.g.board.damier[(self.mouseGrab)]=Dame((self.mouseGrab),self.color_state.get())
+        elif self.piece.get() == 'Roi':
+            self.g.board.damier[(self.mouseGrab)]=Roi((self.mouseGrab),self.color_state.get())
+        elif self.piece.get() == 'Cavalier':
+            self.g.board.damier[(self.mouseGrab)]=Cavalier((self.mouseGrab),self.color_state.get())
+        elif self.piece.get() == 'Fou':
+            self.g.board.damier[(self.mouseGrab)]=Fou((self.mouseGrab),self.color_state.get())    
+        elif self.piece.get() == 'Tour':
+            self.g.board.damier[(self.mouseGrab)]=Tour((self.mouseGrab),self.color_state.get())    
+                        
+        self.actualiser()
         
     def del_piece(self,event):
-            pass
-        
+            self.mouseGrab = self.carreaux.grab(event)
+            self.g.board.damier[(self.mouseGrab)]=None
+            self.actualiser()
     ''' pour choisir le fichier qui servira lors de l'ecriture et de la lecture de partie '''
     def path_dialog(self):
         self.file_path = filedialog.askopenfilename(title="Open file", filetypes=[("txt file",".txt"),("All files",".*")])
@@ -224,6 +237,20 @@ class Window(Frame):
             self.file.delete(0, END)
             self.file.insert(0,"Choisisez un fichier")
         
+            
+            ''' Gestion de la personalisation'''
+    def switch_perso(self):
+        if self.perso_state == "off":
+            self.perso_btn.config(text="Terminer la personnalisation")
+            self.root.bind("<Button-1>", self.add_piece)
+            self.root.bind("<Button-3>", self.del_piece)
+            self.perso_state = "on"
+        else:
+            self.perso_btn.config(text="Personaliser")
+            self.root.bind("<Button-1>", self.grab_piece)
+            self.root.bind("<ButtonRelease-1>", self.drop_piece)
+            self.perso_state = "off"
+            
     def histo(self):
         
         self.text.text_insert(((self.mouseGrab[0], self.mouseGrab[1])), self.mouseDrop)

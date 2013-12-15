@@ -37,6 +37,8 @@ class GameManagement:
         self.aJouer = {} # Le dictionnaire des coups possibles au prochain coup
         self.calculAJouer()
         
+        print(self.aJouer)
+        
     def calculAJouer(self):
         '''
         Initialse le dictionaire des coups possibles à jouer selon le tour de jeu.

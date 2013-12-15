@@ -19,13 +19,13 @@ class Damier(tk.Frame):
         self.color2 = "gray"
         self.pieces = {}
         # Calcul de la taille du dessin
-        canvas_width = self.columns * self.size
-        canvas_height = self.rows * self.size
+        self.canvas_width = self.columns * self.size
+        self.canvas_height = self.rows * self.size
         # Initialisation de la fenetre parente contenant le canvas
         tk.Frame.__init__(self, parent)
         # Initialisation du canvas
         self.canvas = tk.Canvas(self, borderwidth=0, highlightthickness=0,
-                                width=canvas_width, height=canvas_height, background="white")
+                                width=self.canvas_width, height=self.canvas_height, background="white")
         # "Pack" le tout.
         self.canvas.pack(side="top", fill="both", expand=True, padx=2, pady=2)
         self.pack(side="top", fill="both", expand=True, padx=4, pady=4)
@@ -87,16 +87,17 @@ class Damier(tk.Frame):
         self.canvas.delete("piece")
         
     def grab(self,event):
-        x = event.x // self.size
-        y = event.y // self.size
-        print(y,x)
-        return y,x
+        if event.x > self.canvas_width or event.y > self.canvas_height:
+            return
+        else:
+            x = event.x // self.size
+            y = event.y // self.size
+            return y,x
     
             
     def drop(self,event):
         x = event.x // self.size
         y = event.y // self.size
-        print(y,x)
         return y,x
     
 
