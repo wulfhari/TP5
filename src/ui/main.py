@@ -146,6 +146,14 @@ class Window(Frame):
         ###############################################################
         # Debut de la section des methode de la classe Window
         ###############################################################
+        '''pour actualiser le joueur actif'''
+    def joueur(self):
+        if self.g.color == 1:
+            Label(self.root, text="Joueur 1", width=20,anchor=W,foreground="white",background="gray75").grid(row=0, column=1, sticky=W)
+            Label(self.root, text="Joueur 2", width=20,anchor=W).grid(row=0, column=2, sticky=W)
+        elif self.g.color ==0:
+            Label(self.root, text="Joueur 1", width=20,anchor=W).grid(row=0, column=1, sticky=W)
+            Label(self.root, text="Joueur 2", width=20,anchor=W,foreground="white",background="gray75").grid(row=0, column=2, sticky=W)    
         
         '''pour actualiser l'affichage'''
     def actualiser(self):
@@ -157,8 +165,9 @@ class Window(Frame):
         
         for piece in pieces_list:
             self.carreaux.addpiece(piece[2:],int(piece[0]),int(piece[1]))
+        self.joueur()
             
-            '''Pour creer une partie vierge'''
+        '''Pour creer une partie vierge'''
     def clear(self):
         self.g = GameManagement('../jeu2.txt')
         self.actualiser()
