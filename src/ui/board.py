@@ -29,7 +29,8 @@ class Damier(tk.Frame):
         # "Pack" le tout.
         self.canvas.pack(side="top", fill="both", expand=True, padx=2, pady=2)
         self.pack(side="top", fill="both", expand=True, padx=4, pady=4)
-
+        
+                
         # Fais en sorte que le redimensionnement de la fenetre redimensionne le damier
         self.canvas.bind("<Configure>", self.refresh)
         self.canvas.bind("<Button-1>",self.grab)
@@ -87,12 +88,9 @@ class Damier(tk.Frame):
         self.canvas.delete("piece")
         
     def grab(self,event):
-        if event.x > self.canvas_width or event.y > self.canvas_height:
-            return
-        else:
-            x = event.x // self.size
-            y = event.y // self.size
-            return y,x
+        x = event.x // self.size
+        y = event.y // self.size
+        return y,x
     
             
     def drop(self,event):

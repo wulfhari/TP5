@@ -137,8 +137,8 @@ class Window(Frame):
         
         
         ''' GEstion des clicks de la sourie'''
-        self.root.bind("<Button-1>", self.grab_piece)
-        self.root.bind("<ButtonRelease-1>", self.drop_piece)
+        self.carreaux.canvas.bind("<Button-1>", self.grab_piece)
+        self.carreaux.canvas.bind("<ButtonRelease-1>", self.drop_piece)
         
         
         
@@ -216,6 +216,8 @@ class Window(Frame):
     def add_piece(self,event):
         self.mouseGrab = self.carreaux.grab(event)
         
+        
+        
         if self.piece.get() == 'Pion':
             self.g.board.damier[(self.mouseGrab)]=Pion((self.mouseGrab),self.color_state.get())
         elif self.piece.get() == 'Dame':
@@ -251,14 +253,16 @@ class Window(Frame):
     def switch_perso(self):
         if self.perso_state == "off":
             self.perso_btn.config(text="Terminer la personnalisation")
-            self.root.bind("<Button-1>", self.add_piece)
-            self.root.bind("<Button-3>", self.del_piece)
+            self.carreaux.canvas.bind("<Button-1>", self.add_piece)
+            #self.root.bind("<Button-3>", self.del_piece)
             self.perso_state = "on"
         else:
             self.perso_btn.config(text="Personaliser")
-            self.root.bind("<Button-1>", self.grab_piece)
-            self.root.bind("<ButtonRelease-1>", self.drop_piece)
+            self.carreaux.canvas.bind("<Button-1>", self.carreaux.grab)
+            self.carreaux.canvas.bind("<ButtonRelease-1>", self.carreaux.drop)
             self.perso_state = "off"
+            
+            
             
     def histo(self):
         
